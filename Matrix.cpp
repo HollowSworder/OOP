@@ -120,3 +120,13 @@ int Matrix::getRows() const {
 int Matrix::getCols() const {
     return cols_;
 }
+
+Matrix Matrix::transpose() const {
+    Matrix result(cols_, rows_);
+    for (int i = 0; i < rows_; ++i) {
+        for (int j = 0; j < cols_; ++j) {
+            result.set(j, i, data_[i][j]);
+        }
+    }
+    return result;
+}

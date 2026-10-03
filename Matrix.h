@@ -23,4 +23,6 @@ public:
     int sum() const;
     int getRows() const;
     int getCols() const;
+
+    Matrix transpose() const;
 };
