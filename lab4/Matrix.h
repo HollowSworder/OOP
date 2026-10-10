@@ -8,7 +8,7 @@ private:
 
     void allocate(int rows, int cols);
     void freeMemory();
-    void copyData(const Matrix& other);
+    void copyFrom(const Matrix& other);
 
 public:
     Matrix();

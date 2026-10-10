@@ -6,16 +6,9 @@
 void Matrix::allocate(int rows, int cols) {
     rows_ = rows;
     cols_ = cols;
-    if (rows_ == 0 || cols_ == 0) {
-        data_ = nullptr;
-        rows_ = 0;
-        cols_ = 0;
-        return;
-    }
-
     data_ = new int*[rows_];
     for (int i = 0; i < rows_; ++i) {
-        data_[i] = new int[cols_]{};
+        data_[i] = new int[cols_]; 
     }
 }
 
@@ -32,24 +25,18 @@ void Matrix::freeMemory() {
     cols_ = 0;
 }
 
-void Matrix::copyData(const Matrix& other) {
-    rows_ = other.rows_;
-    cols_ = other.cols_;
-    if (rows_ == 0 || cols_ == 0 || other.data_ == nullptr) {
-        data_ = nullptr;
-        rows_ = 0;
-        cols_ = 0;
+void Matrix::copyFrom(const Matrix& other) {
+    if (other.rows_ == 0 || other.cols_ == 0 || other.data_ == nullptr) {
         return;
     }
-
-    data_ = new int*[rows_];
+    allocate(other.rows_, other.cols_); 
     for (int i = 0; i < rows_; ++i) {
-        data_[i] = new int[cols_];
         for (int j = 0; j < cols_; ++j) {
             data_[i][j] = other.data_[i][j];
         }
     }
 }
+
 
 Matrix::Matrix() 
     : data_(nullptr), rows_(0), cols_(0) {}
@@ -58,6 +45,9 @@ Matrix::Matrix(int size)
     : data_(nullptr), rows_(0), cols_(0) {
     if (size < 0) {
         throw std::invalid_argument("Размерность не может быть отрицательной");
+    }
+    if (size == 0) {
+        return; 
     }
     allocate(size, size);
     for (int i = 0; i < size; ++i) {
@@ -70,12 +60,20 @@ Matrix::Matrix(int rows, int cols)
     if (rows < 0 || cols < 0) {
         throw std::invalid_argument("Размерность не может быть отрицательной");
     }
+    if (rows == 0 || cols == 0) {
+        return; 
+    }
     allocate(rows, cols);
+    for (int i = 0; i < rows_; ++i) {
+        for (int j = 0; j < cols_; ++j) {
+            data_[i][j] = 0; 
+        }
+    }
 }
 
 Matrix::Matrix(const Matrix& other) 
     : data_(nullptr), rows_(0), cols_(0) {
-    copyData(other);
+    copyFrom(other);
 }
 
 Matrix& Matrix::operator=(const Matrix& other) {
@@ -83,7 +81,7 @@ Matrix& Matrix::operator=(const Matrix& other) {
         return *this; 
     }
     freeMemory();
-    copyData(other);
+    copyFrom(other);
     return *this;
 }
 
