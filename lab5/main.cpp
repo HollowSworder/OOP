@@ -1,14 +1,19 @@
 #include <iostream>
 #include "Professor.h"
 #include "Course.h"
+#include "Student.h"
 
 int main() {
-    Professor prof("Dr. Alan Turing");
-    Course course("Computer Science 101", &prof);
-    course.addTopic("Introduction to Turing Machines");
+    Professor prof("Dr. Grace Hopper");
+    Course course("Software Engineering", &prof);
+    course.addTopic("Version Control");
 
-    std::cout << "Course: " << course.getName() << "\n";
-    std::cout << "Professor: " << course.getProfessor()->getName() << "\n";
+    Student student("Иван");
+    student.enroll(&course);
+    student.enroll(&course); 
+
+    std::cout << "Student: " << student.getName() << "\n";
+    std::cout << "Enrolled courses count: " << student.getCourses().size() << "\n";
 
     return 0;
 }
