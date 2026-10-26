@@ -1,12 +1,18 @@
 #include <iostream>
 #include "Student.h"
+#include "BudgetStudent.h"
+#include "PaidStudent.h"
 
 int main() {
-    Student baseStudent("Иван");
+    BudgetStudent alice("Alice", 1500);
+    PaidStudent bob("Bob", 200000);
 
-    std::cout << "Name: " << baseStudent.getName() << "\n";
-    std::cout << "Status: " << baseStudent.getStatus() << "\n";
-    std::cout << "Tuition: " << baseStudent.getTuition() << "\n";
+    std::cout << alice.getName() << " (" << alice.getStatus()
+              << "), tuition: " << alice.getTuition()
+              << ", scholarship: " << alice.getScholarship() << "\n";
+
+    std::cout << bob.getName() << " (" << bob.getStatus()
+              << "), tuition: " << bob.getTuition() << "\n";
 
     return 0;
 }
