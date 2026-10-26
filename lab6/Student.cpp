@@ -1,4 +1,5 @@
 #include "Student.h"
+#include "Course.h"
 
 Student::Student(const std::string& name) : name_(name) {}
 

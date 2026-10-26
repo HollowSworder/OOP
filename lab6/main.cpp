@@ -1,18 +1,24 @@
 #include <iostream>
-#include "Student.h"
+#include "Professor.h"
+#include "Course.h"
 #include "BudgetStudent.h"
 #include "PaidStudent.h"
 
 int main() {
+    Professor prof("Dr. Ivanov");
+    Course c("OOP", &prof);
+
     BudgetStudent alice("Alice", 1500);
     PaidStudent bob("Bob", 200000);
 
-    std::cout << alice.getName() << " (" << alice.getStatus()
-              << "), tuition: " << alice.getTuition()
-              << ", scholarship: " << alice.getScholarship() << "\n";
-
-    std::cout << bob.getName() << " (" << bob.getStatus()
-              << "), tuition: " << bob.getTuition() << "\n";
+    c.enrollStudent(&alice);
+    c.enrollStudent(&bob);
+    c.enrollStudent(&alice); 
+    std::cout << c.getName() << " (Prof. " << c.getProfessor()->getName() << ")\n";
+    std::cout << "Students: " << c.getStudentCount() << "\n";
+    for (const Student* s : c.getStudents()) {
+        std::cout << "- " << s->getName() << " (" << s->getStatus() << ")\n";
+    }
 
     return 0;
 }
